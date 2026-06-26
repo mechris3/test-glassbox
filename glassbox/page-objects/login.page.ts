@@ -1,5 +1,9 @@
 import { BasePage } from '@mechris3/glassbox';
 
+/**
+ * Page object for the login page (/login).
+ * Handles authentication interactions and validation checks.
+ */
 export class LoginPage extends BasePage {
   private selectors = {
     page: '[data-testid="login-page"]',
@@ -11,58 +15,80 @@ export class LoginPage extends BasePage {
     emailFormatError: '[data-testid="login-email-format-error"]',
     passwordError: '[data-testid="login-password-error"]',
     passwordLengthError: '[data-testid="login-password-length-error"]',
-    hint: '[data-testid="login-hint"]',
   };
 
-  async isVisible() {
-    await this.waitFor(this.selectors.page);
+  /** Wait for the login page to be visible. */
+  async verifyLoaded() {
+    await this.waitForSelector(this.selectors.page);
   }
 
-  async login(email: string, password: string) {
+  /** Fill credentials and submit the login form. */
+  async loginAs(email: string, password: string) {
     await this.fill(this.selectors.email, email);
     await this.fill(this.selectors.password, password);
     await this.click(this.selectors.submit);
   }
 
-  async getErrorMessage(): Promise<string> {
-    return await this.getText(this.selectors.error);
+  /** Verify that the auth error message matches the expected text. */
+  async verifyErrorMessage(expected: string) {
+    await this.waitForText(this.selectors.error, expected);
   }
 
-  async hasError(): Promise<boolean> {
-    return await this.exists(this.selectors.error);
-  }
-
-  async getEmailValidationError(): Promise<string> {
-    if (await this.exists(this.selectors.emailError)) {
-      return await this.getText(this.selectors.emailError);
+  /** Verify that the submit button is disabled (form invalid). */
+  async verifySubmitDisabled() {
+    const disabled = await this.isDisabled(this.selectors.submit);
+    if (!disabled) {
+      throw new Error('Expected submit button to be disabled');
     }
-    if (await this.exists(this.selectors.emailFormatError)) {
-      return await this.getText(this.selectors.emailFormatError);
+  }
+
+  /** Verify that the submit button is enabled (form valid). */
+  async verifySubmitEnabled() {
+    const disabled = await this.isDisabled(this.selectors.submit);
+    if (disabled) {
+      throw new Error('Expected submit button to be enabled');
     }
-    return '';
   }
 
-  async getPasswordValidationError(): Promise<string> {
-    if (await this.exists(this.selectors.passwordError)) {
-      return await this.getText(this.selectors.passwordError);
-    }
-    if (await this.exists(this.selectors.passwordLengthError)) {
-      return await this.getText(this.selectors.passwordLengthError);
-    }
-    return '';
+  /** Focus and blur the email field to trigger validation. */
+  async blurEmail() {
+    await this.focus(this.selectors.email);
+    await this.pressKey('Tab');
   }
 
-  async isSubmitDisabled(): Promise<boolean> {
-    return await this.isDisabled(this.selectors.submit);
+  /** Focus and blur the password field to trigger validation. */
+  async blurPassword() {
+    await this.focus(this.selectors.password);
+    await this.pressKey('Tab');
   }
 
-  async triggerEmailValidation() {
-    await this.click(this.selectors.email);
-    await this.click(this.selectors.password); // blur email
+  /** Verify the email required validation error is shown. */
+  async verifyEmailRequiredError() {
+    await this.waitForSelector(this.selectors.emailError);
   }
 
-  async triggerPasswordValidation() {
-    await this.click(this.selectors.password);
-    await this.click(this.selectors.email); // blur password
+  /** Verify the email format validation error is shown. */
+  async verifyEmailFormatError() {
+    await this.waitForSelector(this.selectors.emailFormatError);
+  }
+
+  /** Verify the password required validation error is shown. */
+  async verifyPasswordRequiredError() {
+    await this.waitForSelector(this.selectors.passwordError);
+  }
+
+  /** Verify the password min-length validation error is shown. */
+  async verifyPasswordLengthError() {
+    await this.waitForSelector(this.selectors.passwordLengthError);
+  }
+
+  /** Fill only the email field (for partial form scenarios). */
+  async fillEmail(email: string) {
+    await this.fill(this.selectors.email, email);
+  }
+
+  /** Fill only the password field (for partial form scenarios). */
+  async fillPassword(password: string) {
+    await this.fill(this.selectors.password, password);
   }
 }
