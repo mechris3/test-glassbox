@@ -1,0 +1,15 @@
+{
+  "name": "my-glassbox-tests",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "glassbox serve",
+    "run": "glassbox run",
+    "run:headed": "glassbox run --headed",
+    "mcp": "glassbox mcp"
+  },
+  "dependencies": {
+    "@mechris3/glassbox": "^0.1.0"
+  }
+}

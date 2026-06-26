@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "name": "Alice Johnson",
+    "email": "alice@company.com",
+    "role": "Project Manager",
+    "avatar": "https://i.pravatar.cc/150?u=alice",
+    "department": "Management"
+  },
+  {
+    "id": 2,
+    "name": "Bob Smith",
+    "email": "bob@company.com",
+    "role": "Senior Developer",
+    "avatar": "https://i.pravatar.cc/150?u=bob",
+    "department": "Engineering"
+  },
+  {
+    "id": 3,
+    "name": "Carol Williams",
+    "email": "carol@company.com",
+    "role": "Lead Designer",
+    "avatar": "https://i.pravatar.cc/150?u=carol",
+    "department": "Design"
+  },
+  {
+    "id": 4,
+    "name": "Dave Brown",
+    "email": "dave@company.com",
+    "role": "Backend Developer",
+    "avatar": "https://i.pravatar.cc/150?u=dave",
+    "department": "Engineering"
+  },
+  {
+    "id": 5,
+    "name": "Eva Martinez",
+    "email": "eva@company.com",
+    "role": "Frontend Developer",
+    "avatar": "https://i.pravatar.cc/150?u=eva",
+    "department": "Engineering"
+  },
+  {
+    "id": 6,
+    "name": "Frank Lee",
+    "email": "frank@company.com",
+    "role": "UX Researcher",
+    "avatar": "https://i.pravatar.cc/150?u=frank",
+    "department": "Design"
+  },
+  {
+    "id": 7,
+    "name": "Grace Kim",
+    "email": "grace@company.com",
+    "role": "DevOps Engineer",
+    "avatar": "https://i.pravatar.cc/150?u=grace",
+    "department": "Engineering"
+  },
+  {
+    "id": 8,
+    "name": "Henry Chen",
+    "email": "henry@company.com",
+    "role": "Security Engineer",
+    "avatar": "https://i.pravatar.cc/150?u=henry",
+    "department": "Security"
+  }
+]

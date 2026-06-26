@@ -1,0 +1,20 @@
+@if (visible) {
+  <div class="dialog-backdrop" data-testid="confirm-dialog-backdrop" (click)="onCancel()">
+    <div class="dialog" data-testid="confirm-dialog" (click)="$event.stopPropagation()">
+      <h3 class="dialog-title" data-testid="confirm-dialog-title">{{ title }}</h3>
+      <p class="dialog-message" data-testid="confirm-dialog-message">{{ message }}</p>
+      <div class="dialog-actions">
+        <button
+          class="btn-cancel"
+          (click)="onCancel()"
+          data-testid="confirm-cancel"
+        >Cancel</button>
+        <button
+          class="btn-confirm"
+          (click)="onConfirm()"
+          data-testid="confirm-yes"
+        >Confirm</button>
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,71 @@
+<nav
+  class="sidebar"
+  [class.collapsed]="collapsed"
+  data-testid="navigation-sidebar"
+>
+  <div class="sidebar-header">
+    @if (!collapsed) {
+      <span class="brand" data-testid="nav-brand">ProjectMgr</span>
+    }
+    <button
+      class="collapse-btn"
+      (click)="toggleCollapse()"
+      data-testid="nav-collapse-toggle"
+      [attr.aria-label]="collapsed ? 'Expand navigation' : 'Collapse navigation'"
+    >
+      @if (collapsed) {
+        ☰
+      } @else {
+        ◀
+      }
+    </button>
+  </div>
+
+  <ul class="nav-list">
+    @for (item of navItems; track item.path) {
+      <li>
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [attr.data-testid]="item.testId"
+          class="nav-link"
+        >
+          <span class="nav-icon">{{ item.icon }}</span>
+          @if (!collapsed) {
+            <span class="nav-label">{{ item.label }}</span>
+          }
+        </a>
+      </li>
+    }
+  </ul>
+
+  <div class="sidebar-footer">
+    @if (user$ | async; as user) {
+      <div class="user-info" data-testid="nav-user-info">
+        <img
+          [src]="user.avatar"
+          [alt]="user.name"
+          class="user-avatar"
+          data-testid="nav-user-avatar"
+        />
+        @if (!collapsed) {
+          <div class="user-details">
+            <span class="user-name" data-testid="nav-user-name">{{ user.name }}</span>
+            <span class="user-role">{{ user.role }}</span>
+          </div>
+        }
+      </div>
+    }
+    <button
+      class="logout-btn"
+      (click)="onLogout()"
+      data-testid="nav-logout"
+      aria-label="Logout"
+    >
+      <span class="nav-icon">🚪</span>
+      @if (!collapsed) {
+        <span class="nav-label">Logout</span>
+      }
+    </button>
+  </div>
+</nav>

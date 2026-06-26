@@ -1,0 +1,10 @@
+@if (isAuthenticated$ | async) {
+  <div class="app-layout" data-testid="app-layout">
+    <app-navigation />
+    <main class="main-content" data-testid="main-content">
+      <router-outlet />
+    </main>
+  </div>
+} @else {
+  <router-outlet />
+}

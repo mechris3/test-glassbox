@@ -1,0 +1,69 @@
+<div class="login-container" data-testid="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <h1 data-testid="login-title">Project Manager</h1>
+      <p>Sign in to your account</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" data-testid="login-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+          data-testid="login-email"
+          (focus)="clearError()"
+        />
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']) {
+          <span class="field-error" data-testid="login-email-error">Email is required</span>
+        }
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['email']) {
+          <span class="field-error" data-testid="login-email-format-error">Invalid email format</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          data-testid="login-password"
+          (focus)="clearError()"
+        />
+        @if (loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']) {
+          <span class="field-error" data-testid="login-password-error">Password is required</span>
+        }
+        @if (loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['minlength']) {
+          <span class="field-error" data-testid="login-password-length-error">Password must be at least 3 characters</span>
+        }
+      </div>
+
+      @if (error$ | async; as error) {
+        <div class="auth-error" data-testid="login-error">
+          {{ error }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid || (loading$ | async)"
+        data-testid="login-submit"
+      >
+        @if (loading$ | async) {
+          <span class="spinner"></span> Signing in...
+        } @else {
+          Sign In
+        }
+      </button>
+    </form>
+
+    <div class="login-hint" data-testid="login-hint">
+      <p>Demo accounts:</p>
+      <code>alice&#64;company.com / alice123</code>
+    </div>
+  </div>
+</div>

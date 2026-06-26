@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "name": "Website Redesign",
+    "description": "Complete overhaul of the company website with modern design patterns",
+    "status": "active",
+    "priority": "high",
+    "startDate": "2026-01-15",
+    "dueDate": "2026-07-30",
+    "ownerId": 1,
+    "teamMemberIds": [1, 2, 3, 5]
+  },
+  {
+    "id": 2,
+    "name": "Mobile App v2",
+    "description": "Second major version of the mobile application with new features",
+    "status": "active",
+    "priority": "high",
+    "startDate": "2026-02-01",
+    "dueDate": "2026-08-15",
+    "ownerId": 2,
+    "teamMemberIds": [2, 4, 6, 7]
+  },
+  {
+    "id": 3,
+    "name": "API Migration",
+    "description": "Migrate legacy REST APIs to GraphQL",
+    "status": "active",
+    "priority": "medium",
+    "startDate": "2026-03-10",
+    "dueDate": "2026-09-01",
+    "ownerId": 4,
+    "teamMemberIds": [2, 4, 8]
+  },
+  {
+    "id": 4,
+    "name": "Design System",
+    "description": "Build a unified design system and component library",
+    "status": "completed",
+    "priority": "medium",
+    "startDate": "2025-09-01",
+    "dueDate": "2026-02-28",
+    "ownerId": 3,
+    "teamMemberIds": [3, 5]
+  },
+  {
+    "id": 5,
+    "name": "Analytics Dashboard",
+    "description": "Internal analytics dashboard for tracking KPIs",
+    "status": "archived",
+    "priority": "low",
+    "startDate": "2025-06-01",
+    "dueDate": "2025-12-31",
+    "ownerId": 1,
+    "teamMemberIds": [1, 6]
+  },
+  {
+    "id": 6,
+    "name": "Security Audit",
+    "description": "Comprehensive security audit and vulnerability assessment",
+    "status": "active",
+    "priority": "high",
+    "startDate": "2026-05-01",
+    "dueDate": "2026-06-30",
+    "ownerId": 4,
+    "teamMemberIds": [2, 4, 7, 8]
+  }
+]

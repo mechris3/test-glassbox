@@ -1,0 +1,127 @@
+<div class="settings-page" data-testid="settings-page">
+  <header class="page-header">
+    <h1 data-testid="settings-title">Settings</h1>
+    <p class="subtitle">Manage your preferences and profile</p>
+  </header>
+
+  <form [formGroup]="settingsForm" (ngSubmit)="onSave()" data-testid="settings-form">
+    <!-- Theme -->
+    <section class="settings-section" data-testid="settings-theme-section">
+      <h2>Theme</h2>
+      <p class="section-description">Choose your preferred appearance</p>
+      <div class="theme-options">
+        <button
+          type="button"
+          class="theme-option"
+          [class.selected]="settingsForm.get('theme')?.value === 'dark'"
+          (click)="onThemeChange('dark')"
+          data-testid="settings-theme-dark"
+        >
+          <span class="theme-icon">🌙</span>
+          <span class="theme-label">Dark</span>
+        </button>
+        <button
+          type="button"
+          class="theme-option"
+          [class.selected]="settingsForm.get('theme')?.value === 'light'"
+          (click)="onThemeChange('light')"
+          data-testid="settings-theme-light"
+        >
+          <span class="theme-icon">☀️</span>
+          <span class="theme-label">Light</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Notifications -->
+    <section class="settings-section" formGroupName="notifications" data-testid="settings-notifications-section">
+      <h2>Notifications</h2>
+      <p class="section-description">Configure how you receive notifications</p>
+      <div class="checkbox-list">
+        <label class="checkbox-item" data-testid="settings-notify-email-label">
+          <input
+            type="checkbox"
+            formControlName="email"
+            data-testid="settings-notify-email"
+          />
+          <span class="checkbox-text">Email notifications</span>
+          <span class="checkbox-desc">Receive updates via email</span>
+        </label>
+        <label class="checkbox-item" data-testid="settings-notify-push-label">
+          <input
+            type="checkbox"
+            formControlName="push"
+            data-testid="settings-notify-push"
+          />
+          <span class="checkbox-text">Push notifications</span>
+          <span class="checkbox-desc">Browser push notifications for urgent updates</span>
+        </label>
+        <label class="checkbox-item" data-testid="settings-notify-inapp-label">
+          <input
+            type="checkbox"
+            formControlName="inApp"
+            data-testid="settings-notify-inapp"
+          />
+          <span class="checkbox-text">In-app notifications</span>
+          <span class="checkbox-desc">Show notifications within the application</span>
+        </label>
+        <label class="checkbox-item" data-testid="settings-notify-digest-label">
+          <input
+            type="checkbox"
+            formControlName="weeklyDigest"
+            data-testid="settings-notify-digest"
+          />
+          <span class="checkbox-text">Weekly digest</span>
+          <span class="checkbox-desc">Get a summary of activity every Monday</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Profile -->
+    <section class="settings-section" formGroupName="profile" data-testid="settings-profile-section">
+      <h2>Profile</h2>
+      <p class="section-description">Update your display information</p>
+      <div class="profile-fields">
+        <div class="form-group">
+          <label for="displayName">Display Name</label>
+          <input
+            id="displayName"
+            type="text"
+            formControlName="displayName"
+            placeholder="Enter display name"
+            data-testid="settings-display-name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="avatarUrl">Avatar URL</label>
+          <input
+            id="avatarUrl"
+            type="url"
+            formControlName="avatarUrl"
+            placeholder="https://example.com/avatar.png"
+            data-testid="settings-avatar-url"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Actions -->
+    <div class="settings-actions" data-testid="settings-actions">
+      <button
+        type="submit"
+        class="btn-save"
+        data-testid="settings-save"
+      >Save Settings</button>
+      <button
+        type="button"
+        class="btn-reset"
+        (click)="onReset()"
+        data-testid="settings-reset"
+      >Reset to Defaults</button>
+
+      @if (saved$ | async) {
+        <span class="save-success" data-testid="settings-saved-message">✓ Settings saved successfully</span>
+      }
+    </div>
+  </form>
+</div>

@@ -1,0 +1,186 @@
+@if (project$ | async; as project) {
+  <div class="project-detail" data-testid="project-detail-page">
+    <header class="page-header">
+      <a routerLink="/projects" class="back-link" data-testid="project-back-link">← Back to Projects</a>
+      <div class="header-row">
+        <div>
+          <h1 data-testid="project-detail-name">{{ project.name }}</h1>
+          <p class="subtitle" data-testid="project-detail-description">{{ project.description }}</p>
+        </div>
+        <span
+          class="status-badge"
+          [class]="'status-' + project.status"
+          data-testid="project-detail-status"
+        >{{ project.status }}</span>
+      </div>
+    </header>
+
+    <section class="progress-section" data-testid="project-progress-section">
+      <div class="progress-header">
+        <h2>Progress</h2>
+        <span class="progress-percent" data-testid="project-progress-percent">{{ progress$ | async }}%</span>
+      </div>
+      <div class="progress-bar-container" data-testid="project-progress-bar">
+        <div
+          class="progress-bar-fill"
+          [style.width.%]="progress$ | async"
+        ></div>
+      </div>
+    </section>
+
+    <section class="tasks-section" data-testid="project-tasks-section">
+      <div class="tasks-header">
+        <h2>Tasks</h2>
+        <button
+          class="add-task-btn"
+          (click)="toggleAddForm()"
+          data-testid="add-task-toggle"
+        >
+          @if (showAddForm) { Cancel } @else { + Add Task }
+        </button>
+      </div>
+
+      @if (showAddForm) {
+        <form
+          class="add-task-form"
+          [formGroup]="addTaskForm"
+          (ngSubmit)="onAddTask()"
+          data-testid="add-task-form"
+        >
+          <div class="form-row">
+            <div class="form-group">
+              <label for="task-name">Task Name</label>
+              <input
+                id="task-name"
+                type="text"
+                formControlName="name"
+                placeholder="Enter task name"
+                data-testid="add-task-name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="task-assignee">Assignee</label>
+              <select
+                id="task-assignee"
+                formControlName="assigneeId"
+                data-testid="add-task-assignee"
+              >
+                <option value="" disabled>Select assignee</option>
+                @for (member of team$ | async; track member.id) {
+                  <option [value]="member.id">{{ member.name }}</option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="task-priority">Priority</label>
+              <select
+                id="task-priority"
+                formControlName="priority"
+                data-testid="add-task-priority"
+              >
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="task-due">Due Date</label>
+              <input
+                id="task-due"
+                type="date"
+                formControlName="dueDate"
+                data-testid="add-task-due-date"
+              />
+            </div>
+            <div class="form-group form-submit">
+              <button
+                type="submit"
+                [disabled]="addTaskForm.invalid"
+                data-testid="add-task-submit"
+              >Add Task</button>
+            </div>
+          </div>
+        </form>
+      }
+
+      <div class="task-list" data-testid="task-list">
+        @for (task of tasks$ | async; track task.id) {
+          <div
+            class="task-item"
+            [class]="'task-status-' + task.status"
+            [attr.data-testid]="'task-item-' + task.id"
+          >
+            <button
+              class="task-toggle"
+              (click)="onStatusToggle(task)"
+              [attr.data-testid]="'task-toggle-' + task.id"
+              [attr.aria-label]="'Toggle status for ' + task.name"
+            >
+              @switch (task.status) {
+                @case ('done') { ✓ }
+                @case ('in-progress') { ◐ }
+                @default { ○ }
+              }
+            </button>
+
+            <div class="task-content">
+              <span
+                class="task-name"
+                [class.task-done]="task.status === 'done'"
+                [attr.data-testid]="'task-name-' + task.id"
+              >{{ task.name }}</span>
+              <div class="task-meta">
+                <span
+                  class="task-status-badge"
+                  [class]="'badge-' + task.status"
+                  [attr.data-testid]="'task-status-' + task.id"
+                >{{ getStatusLabel(task.status) }}</span>
+                <span
+                  class="task-priority"
+                  [class]="'priority-' + task.priority"
+                  [attr.data-testid]="'task-priority-' + task.id"
+                >{{ task.priority }}</span>
+                @if (team$ | async; as members) {
+                  <span
+                    class="task-assignee"
+                    [attr.data-testid]="'task-assignee-' + task.id"
+                  >{{ getTeamMemberName(members, task.assigneeId) }}</span>
+                }
+                <span
+                  class="task-due"
+                  [attr.data-testid]="'task-due-' + task.id"
+                >{{ task.dueDate }}</span>
+              </div>
+            </div>
+
+            <button
+              class="task-delete-btn"
+              (click)="requestDelete(task.id)"
+              [attr.data-testid]="'task-delete-' + task.id"
+              aria-label="Delete task"
+            >🗑️</button>
+          </div>
+        } @empty {
+          <div class="tasks-empty" data-testid="tasks-empty">
+            <p>No tasks yet. Add one to get started.</p>
+          </div>
+        }
+      </div>
+    </section>
+
+    <app-confirm-dialog
+      [visible]="showConfirmDialog"
+      title="Delete Task"
+      message="Are you sure you want to delete this task? This action cannot be undone."
+      (confirmed)="confirmDelete()"
+      (cancelled)="cancelDelete()"
+    />
+  </div>
+} @else {
+  <div class="not-found" data-testid="project-not-found">
+    <h2>Project not found</h2>
+    <a routerLink="/projects" data-testid="project-not-found-link">Back to Projects</a>
+  </div>
+}

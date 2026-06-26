@@ -1,0 +1,119 @@
+<div class="projects-page" data-testid="projects-page">
+  <header class="page-header">
+    <h1 data-testid="projects-title">Projects</h1>
+    <p class="subtitle">Manage and track all your projects</p>
+  </header>
+
+  <div class="toolbar" data-testid="projects-toolbar">
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Search projects..."
+        [ngModel]="searchQuery"
+        (ngModelChange)="onSearch($event)"
+        data-testid="projects-search"
+      />
+    </div>
+
+    <div class="filter-group" data-testid="projects-status-filter">
+      <button
+        [class.active]="statusFilter === 'all'"
+        (click)="onStatusFilter('all')"
+        data-testid="filter-status-all"
+      >All</button>
+      <button
+        [class.active]="statusFilter === 'active'"
+        (click)="onStatusFilter('active')"
+        data-testid="filter-status-active"
+      >Active</button>
+      <button
+        [class.active]="statusFilter === 'completed'"
+        (click)="onStatusFilter('completed')"
+        data-testid="filter-status-completed"
+      >Completed</button>
+      <button
+        [class.active]="statusFilter === 'archived'"
+        (click)="onStatusFilter('archived')"
+        data-testid="filter-status-archived"
+      >Archived</button>
+    </div>
+
+    <div class="sort-group" data-testid="projects-sort">
+      <button
+        (click)="onSortChange('name')"
+        [class.active]="sortField === 'name'"
+        data-testid="sort-by-name"
+      >Name</button>
+      <button
+        (click)="onSortChange('dueDate')"
+        [class.active]="sortField === 'dueDate'"
+        data-testid="sort-by-date"
+      >Date</button>
+      <button
+        (click)="onSortChange('priority')"
+        [class.active]="sortField === 'priority'"
+        data-testid="sort-by-priority"
+      >Priority</button>
+    </div>
+  </div>
+
+  @if (loading$ | async) {
+    <div class="loading" data-testid="projects-loading">Loading projects...</div>
+  }
+
+  <div class="projects-grid" data-testid="projects-list">
+    @for (project of projects$ | async; track project.id) {
+      <a
+        [routerLink]="['/projects', project.id]"
+        class="project-card"
+        [attr.data-testid]="'project-card-' + project.id"
+      >
+        <div class="project-card-header">
+          <h3 [attr.data-testid]="'project-name-' + project.id">{{ project.name }}</h3>
+          <span
+            class="status-badge"
+            [class]="getStatusClass(project.status)"
+            [attr.data-testid]="'project-status-' + project.id"
+          >
+            {{ project.status }}
+          </span>
+        </div>
+
+        <p class="project-description" [attr.data-testid]="'project-desc-' + project.id">
+          {{ project.description }}
+        </p>
+
+        <div class="project-meta">
+          <span
+            class="priority-badge"
+            [class]="getPriorityClass(project.priority)"
+            [attr.data-testid]="'project-priority-' + project.id"
+          >
+            {{ project.priority }}
+          </span>
+          <span class="due-date" [attr.data-testid]="'project-due-' + project.id">
+            Due: {{ project.dueDate }}
+          </span>
+        </div>
+
+        @if (taskCounts$ | async; as counts) {
+          @if (counts[project.id]; as taskInfo) {
+            <div class="project-progress" [attr.data-testid]="'project-tasks-' + project.id">
+              <div class="progress-bar-container">
+                <div
+                  class="progress-bar-fill"
+                  [style.width.%]="taskInfo.total > 0 ? (taskInfo.done / taskInfo.total) * 100 : 0"
+                ></div>
+              </div>
+              <span class="progress-text">{{ taskInfo.done }}/{{ taskInfo.total }} tasks</span>
+            </div>
+          }
+        }
+      </a>
+    } @empty {
+      <div class="empty-state" data-testid="projects-empty">
+        <p>No projects found matching your criteria.</p>
+      </div>
+    }
+  </div>
+</div>
