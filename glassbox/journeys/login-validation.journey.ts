@@ -9,7 +9,7 @@ export class LoginValidationJourney extends Journey {
   loginPage = this.page(LoginPage);
 
   async execute() {
-    await this.loginPage.verifyLoaded();
+    await this.loginPage.navigateToApp();
 
     // Email required validation
     await this.loginPage.blurEmail();

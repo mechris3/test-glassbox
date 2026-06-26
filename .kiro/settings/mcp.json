@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "glassbox": {
+      "command": "npx",
+      "args": ["glassbox", "mcp"],
+      "cwd": "glassbox",
+      "env": {
+        "GLASSBOX_URL": "http://localhost:3001"
+      },
+      "disabled": false
+    }
+  }
+}

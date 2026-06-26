@@ -1,0 +1,19 @@
+{
+  "targetUrl": "http://localhost:4200",
+  "browserPath": "",
+  "userDataDir": "",
+  "viewportWidth": 1280,
+  "viewportHeight": 720,
+  "actionDelay": 0,
+  "devtools": false,
+  "headless": false,
+  "keepBrowserOpen": false,
+  "settingsPanelOpen": false,
+  "activeTab": "console",
+  "sidebarWidth": 240,
+  "selectedJourneyIds": [],
+  "targetUrlHistory": [
+    "http://localhost:4200"
+  ],
+  "theme": ""
+}

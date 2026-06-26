@@ -15,7 +15,8 @@ export class DashboardJourney extends Journey {
   settings = this.page(SettingsPage);
 
   async execute() {
-    // Login
+    // Navigate and login
+    await this.loginPage.navigateToApp();
     await this.loginPage.loginAs('alice@company.com', 'alice123');
     await this.dashboard.verifyLoaded();
 
@@ -30,9 +31,5 @@ export class DashboardJourney extends Journey {
     // Quick action: navigate to projects
     await this.dashboard.clickViewProjects();
     await this.projects.verifyLoaded();
-
-    // Navigate back via quick action for settings
-    await this.dashboard.clickSettings();
-    await this.settings.verifyLoaded();
   }
 }

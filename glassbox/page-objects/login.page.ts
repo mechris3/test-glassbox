@@ -22,8 +22,15 @@ export class LoginPage extends BasePage {
     await this.waitForSelector(this.selectors.page);
   }
 
+  /** Navigate to the app and wait for login page. */
+  async navigateToApp() {
+    await this.goto('/');
+    await this.waitForSelector(this.selectors.page);
+  }
+
   /** Fill credentials and submit the login form. */
   async loginAs(email: string, password: string) {
+    await this.waitForSelector(this.selectors.email);
     await this.fill(this.selectors.email, email);
     await this.fill(this.selectors.password, password);
     await this.click(this.selectors.submit);
@@ -31,6 +38,7 @@ export class LoginPage extends BasePage {
 
   /** Verify that the auth error message matches the expected text. */
   async verifyErrorMessage(expected: string) {
+    await this.waitForSelector(this.selectors.error);
     await this.waitForText(this.selectors.error, expected);
   }
 
@@ -52,14 +60,14 @@ export class LoginPage extends BasePage {
 
   /** Focus and blur the email field to trigger validation. */
   async blurEmail() {
-    await this.focus(this.selectors.email);
-    await this.pressKey('Tab');
+    await this.click(this.selectors.email);
+    await this.click(this.selectors.password);
   }
 
   /** Focus and blur the password field to trigger validation. */
   async blurPassword() {
-    await this.focus(this.selectors.password);
-    await this.pressKey('Tab');
+    await this.click(this.selectors.password);
+    await this.click(this.selectors.email);
   }
 
   /** Verify the email required validation error is shown. */

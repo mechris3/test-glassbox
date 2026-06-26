@@ -13,8 +13,8 @@ export class LoginJourney extends Journey {
   dashboard = this.page(DashboardPage);
 
   async execute() {
-    // Verify login page loads
-    await this.loginPage.verifyLoaded();
+    // Navigate to app and verify login page loads
+    await this.loginPage.navigateToApp();
     await this.loginPage.verifySubmitDisabled();
 
     // Test invalid credentials

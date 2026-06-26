@@ -9,7 +9,8 @@
     "test": "ng test",
     "glassbox": "npm run serve --prefix glassbox",
     "glassbox:run": "npm run run --prefix glassbox",
-    "glassbox:mcp": "npm run mcp --prefix glassbox"
+    "glassbox:mcp": "npm run mcp --prefix glassbox",
+    "dev": "ng serve & npm run serve --prefix glassbox & wait"
   },
   "private": true,
   "packageManager": "npm@11.6.4",

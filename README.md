@@ -1,59 +1,75 @@
-# ProjectMgmtDashboard
+# Project Management Dashboard
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+An Angular 21 + NgRx project management dashboard built as a test target for [Glassbox](https://www.npmjs.com/package/@mechris3/glassbox) browser automation testing.
 
-## Development server
-
-To start a local development server, run:
+## Quick Start
 
 ```bash
-ng serve
+# Install dependencies
+npm install
+cd glassbox && npm install && cd ..
+
+# Start both the app and Glassbox dashboard
+npm run dev
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+This launches:
+- Angular app at http://localhost:4200
+- Glassbox dashboard at http://localhost:3001
 
-## Code scaffolding
+## Available Scripts
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start Angular app + Glassbox dashboard together |
+| `npm start` | Start Angular app only (http://localhost:4200) |
+| `npm run build` | Production build to `dist/` |
+| `npm run glassbox` | Start Glassbox dashboard only |
+| `npm run glassbox:run` | Run all journeys headless (CI mode) |
+| `npm run glassbox:mcp` | Start MCP server for AI integration |
 
-```bash
-ng generate component component-name
+## Test Credentials
+
+| User | Email | Password |
+|------|-------|----------|
+| Alice Johnson | `alice@company.com` | `alice123` |
+| Bob Smith | `bob@company.com` | `bob123` |
+| Carol Williams | `carol@company.com` | `carol123` |
+| Dave Brown | `dave@company.com` | `dave123` |
+
+## Project Structure
+
+```
+├── src/                      Angular 21 application
+│   ├── app/
+│   │   ├── components/       Shared components (navigation, confirm-dialog)
+│   │   ├── guards/           Route guards (auth)
+│   │   ├── pages/            Feature pages (login, dashboard, projects, etc.)
+│   │   └── store/            NgRx state (auth, projects, tasks, team, settings)
+│   └── assets/data/          Static JSON data files
+├── glassbox/                  Browser automation (self-contained sub-project)
+│   ├── glassbox.config.ts    Glassbox configuration
+│   ├── journeys/             Test journeys (*.journey.ts)
+│   └── page-objects/         Page objects (*.page.ts)
+├── test-journeys/            Scenario documentation (markdown)
+└── package.json              App dependencies + convenience scripts
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Application Features
 
-```bash
-ng generate --help
-```
+- **Login** — email/password auth against static JSON, NgRx state, validation errors
+- **Dashboard** — summary cards, activity feed, quick actions
+- **Projects** — filterable/sortable list, text search, click-through to detail
+- **Project Detail** — task CRUD, status toggling (todo → in-progress → done), confirmation dialogs
+- **Settings** — dark/light theme, notification preferences, profile editing
+- **Navigation** — collapsible sidebar, active route highlighting, logout
 
-## Building
+## Automation
 
-To build the project run:
+The `glassbox/` folder contains page objects and journeys for Glassbox browser automation:
 
-```bash
-ng build
-```
+- 6 page objects covering every page and component
+- 7 journeys covering login, dashboard, filtering, task lifecycle, settings, and end-to-end flows
+- All interactive elements have `data-testid` attributes for reliable selectors
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+See `test-journeys/` for detailed scenario documentation.

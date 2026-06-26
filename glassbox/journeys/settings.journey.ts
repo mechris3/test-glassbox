@@ -13,7 +13,8 @@ export class SettingsJourney extends Journey {
   settings = this.page(SettingsPage);
 
   async execute() {
-    // Login and navigate to settings
+    // Navigate, login and go to settings
+    await this.loginPage.navigateToApp();
     await this.loginPage.loginAs('alice@company.com', 'alice123');
     await this.navigation.goToSettings();
     await this.settings.verifyLoaded();
