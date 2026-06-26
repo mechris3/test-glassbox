@@ -60,7 +60,9 @@ export class ProjectsPage extends BasePage {
 
   /** Click on a specific project card by project ID. */
   async openProject(projectId: number) {
-    await this.click(`[data-testid="project-card-${projectId}"]`);
+    const selector = `[data-testid="project-card-${projectId}"]`;
+    await this.waitForSelector(selector);
+    await this.click(selector);
   }
 
   /** Verify the number of visible project cards. */

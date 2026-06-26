@@ -17,7 +17,7 @@ export class ProjectFilteringJourney extends Journey {
   async execute() {
     // Navigate, login and go to projects
     await this.loginPage.navigateToApp();
-    await this.loginPage.loginAs('alice@company.com', 'alice123');
+    await this.loginPage.loginAndWaitForDashboard('alice@company.com', 'alice123');
     await this.navigation.goToProjects();
     await this.projects.verifyLoaded();
 

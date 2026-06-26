@@ -33,21 +33,25 @@ export class NavigationPage extends BasePage {
 
   /** Navigate to the dashboard page. */
   async goToDashboard() {
+    await this.waitForSelector(this.selectors.dashboard);
     await this.click(this.selectors.dashboard);
   }
 
   /** Navigate to the projects page. */
   async goToProjects() {
+    await this.waitForSelector(this.selectors.projects);
     await this.click(this.selectors.projects);
   }
 
   /** Navigate to the settings page. */
   async goToSettings() {
+    await this.waitForSelector(this.selectors.settings);
     await this.click(this.selectors.settings);
   }
 
   /** Click the logout button. */
   async logout() {
+    await this.waitForSelector(this.selectors.logout);
     await this.click(this.selectors.logout);
   }
 

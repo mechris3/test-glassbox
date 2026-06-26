@@ -21,7 +21,7 @@ export class EndToEndJourney extends Journey {
   async execute() {
     // Navigate and login
     await this.loginPage.navigateToApp();
-    await this.loginPage.loginAs('alice@company.com', 'alice123');
+    await this.loginPage.loginAndWaitForDashboard('alice@company.com', 'alice123');
     await this.dashboard.verifyLoaded();
     await this.navigation.verifyUserName('Alice Johnson');
 

@@ -17,7 +17,7 @@ export class TaskLifecycleJourney extends Journey {
   async execute() {
     // Navigate, login and go to project detail
     await this.loginPage.navigateToApp();
-    await this.loginPage.loginAs('alice@company.com', 'alice123');
+    await this.loginPage.loginAndWaitForDashboard('alice@company.com', 'alice123');
     await this.navigation.goToProjects();
     await this.projects.openProject(1);
     await this.projectDetail.verifyLoaded();

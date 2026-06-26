@@ -15,7 +15,7 @@ export class SettingsJourney extends Journey {
   async execute() {
     // Navigate, login and go to settings
     await this.loginPage.navigateToApp();
-    await this.loginPage.loginAs('alice@company.com', 'alice123');
+    await this.loginPage.loginAndWaitForDashboard('alice@company.com', 'alice123');
     await this.navigation.goToSettings();
     await this.settings.verifyLoaded();
 

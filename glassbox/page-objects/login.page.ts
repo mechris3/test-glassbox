@@ -36,10 +36,20 @@ export class LoginPage extends BasePage {
     await this.click(this.selectors.submit);
   }
 
-  /** Verify that the auth error message matches the expected text. */
+  /** Login and wait for successful navigation to dashboard. */
+  async loginAndWaitForDashboard(email: string, password: string) {
+    await this.loginAs(email, password);
+    await this.waitForSelector('[data-testid="dashboard-page"]');
+  }
+
+  /** Verify that the auth error message is displayed. */
   async verifyErrorMessage(expected: string) {
     await this.waitForSelector(this.selectors.error);
-    await this.waitForText(this.selectors.error, expected);
+    const text = await this.getText(this.selectors.error);
+    const trimmed = text.trim();
+    if (trimmed !== expected) {
+      throw new Error(`Expected auth error "${expected}", got "${trimmed}"`);
+    }
   }
 
   /** Verify that the submit button is disabled (form invalid). */
@@ -61,13 +71,25 @@ export class LoginPage extends BasePage {
   /** Focus and blur the email field to trigger validation. */
   async blurEmail() {
     await this.click(this.selectors.email);
-    await this.click(this.selectors.password);
+    await this.pressKey('Tab');
+    await this.evaluate(`
+      (() => {
+        const el = document.querySelector('${this.selectors.email}');
+        if (el) { el.dispatchEvent(new Event('blur', { bubbles: true })); }
+      })();
+    `);
   }
 
   /** Focus and blur the password field to trigger validation. */
   async blurPassword() {
     await this.click(this.selectors.password);
-    await this.click(this.selectors.email);
+    await this.pressKey('Tab');
+    await this.evaluate(`
+      (() => {
+        const el = document.querySelector('${this.selectors.password}');
+        if (el) { el.dispatchEvent(new Event('blur', { bubbles: true })); }
+      })();
+    `);
   }
 
   /** Verify the email required validation error is shown. */

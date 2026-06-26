@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { logout } from '../../store/auth/auth.actions';
 import { selectCurrentUser } from '../../store/auth/auth.selectors';
@@ -14,6 +14,7 @@ import { selectCurrentUser } from '../../store/auth/auth.selectors';
 })
 export class NavigationComponent {
   private store = inject(Store);
+  private router = inject(Router);
 
   user$ = this.store.select(selectCurrentUser);
   collapsed = false;
@@ -30,5 +31,6 @@ export class NavigationComponent {
 
   onLogout(): void {
     this.store.dispatch(logout());
+    this.router.navigate(['/login']);
   }
 }
