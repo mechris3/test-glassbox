@@ -11,7 +11,13 @@
   "settingsPanelOpen": true,
   "activeTab": "console",
   "sidebarWidth": 240,
-  "selectedJourneyIds": [],
+  "selectedJourneyIds": [
+    "task-lifecycle",
+    "dashboard",
+    "end-to-end",
+    "login",
+    "login-validation"
+  ],
   "targetUrlHistory": [
     "http://localhost:4200"
   ],

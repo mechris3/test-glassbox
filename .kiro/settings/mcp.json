@@ -2,8 +2,11 @@
   "mcpServers": {
     "glassbox": {
       "command": "npx",
-      "args": ["glassbox", "mcp"],
-      "cwd": "glassbox",
+      "args": [
+        "glassbox",
+        "mcp"
+      ],
+      "cwd": "/Users/christophermichael/Documents/GitHub/test-glassbox/glassbox",
       "env": {
         "GLASSBOX_URL": "http://localhost:3001"
       },

@@ -10,6 +10,6 @@
     "mcp": "glassbox mcp"
   },
   "dependencies": {
-    "@mechris3/glassbox": "^0.1.18"
+    "@mechris3/glassbox": "^0.1.0"
   }
 }
